@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('koneksi.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $result->fetch_assoc();
 
             if (password_verify($password, $user['password'])) {
+                // Set session
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                $_SESSION['user_email'] = $user['email'];
+
                 echo '<script>alert("Login berhasil");</script>';
                 echo "<script>window.location.href = 'dashboard.php';</script>";
             } else {
@@ -29,3 +35,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+?>
